@@ -175,7 +175,7 @@ int main()
         processInput(window);
 
         if (iFrame % 16 == 0) {
-            std::string title = "Renderer - " + std::to_string(iFrameRate) + " fps, " + std::to_string(iTimeDelta*1000.) + " ms";
+            std::string title = "Renderer - " + std::to_string(GLint(iFrameRate)) + " fps, " + std::to_string(GLint(iTimeDelta*1000.)) + " ms";
             glfwSetWindowTitle(window, title.c_str());
         }
         
