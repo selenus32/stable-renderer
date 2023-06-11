@@ -123,14 +123,12 @@ GLuint createQuadVAO() {
 
 int main()
 {
-    // Initialize GLFW
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-    // Create GLFW window
     GLFWwindow* window = glfwCreateWindow(iResolution.x, iResolution.y, "Renderer", NULL, NULL);
     if (window == NULL)
     {
@@ -144,7 +142,6 @@ int main()
     //glfwSetCursorPosCallback(window, mouse_callback);
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // Load OpenGL functions using GLAD
     gladLoadGL();
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -152,10 +149,8 @@ int main()
         return -1;
     }
 
-    //Create Quad VAO
     GLuint quadVAO = createQuadVAO();
 
-    // Viewport and draw settings
     glViewport(0, 0, iResolution.x, iResolution.y);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glLineWidth(4.0f);
@@ -163,58 +158,46 @@ int main()
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
 
-    // Shader uniforms init
     GLfloat iTime = 0.;
     GLfloat iTimeDelta = 0.;
     GLfloat lastFrameTime = 0.;
     GLfloat iFrameRate = 0.;
     GLint iFrame = 0;
     
-    // Render loop
     while (!glfwWindowShouldClose(window))
     {
-        // Shader uniforms
         iTime = glfwGetTime();
         iTimeDelta = iTime - lastFrameTime;
         lastFrameTime = iTime;
         iFrameRate = 1 / iTimeDelta;
         iFrame++;
         
-        // input
         processInput(window);
 
-        // FPS title
         std::string title = "Renderer - " + std::to_string(iFrameRate) + " fps";
         glfwSetWindowTitle(window, title.c_str());
-
-        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-        // Clear the screen
+        
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
         glfwGetWindowSize(window, &iResolution.x, &iResolution.y);
 
-        // Define and activate shaders
         Shader shaderProgram("././src/shaders/default_vert.glsl", "././src/shaders/default_frag.glsl");
         shaderProgram.Activate();
 
-        // Send uniforms to their locations within the shader program
         glUniform2i(glGetUniformLocation(shaderProgram.ID, "iResolution"), iResolution.x,iResolution.y); // Viewport resolution (in pixels)
         glUniform1f(glGetUniformLocation(shaderProgram.ID, "iTime"), iTime); // Shader playback time (in seconds)
         glUniform1f(glGetUniformLocation(shaderProgram.ID, "iTimeDelta"), iTimeDelta);
         glUniform1f(glGetUniformLocation(shaderProgram.ID, "iFrameRate"), iFrameRate);
         glUniform1i(glGetUniformLocation(shaderProgram.ID, "iFrame"), iFrame);
 
-        // Draw quad 
         glBindVertexArray(quadVAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
-        // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
 
-        // Delete shader program
         shaderProgram.Delete();
     }
 
