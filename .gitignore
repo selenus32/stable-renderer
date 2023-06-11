@@ -3,3 +3,4 @@
 Libraries/
 x64/
 src/glad.c/
+src/glad.c
