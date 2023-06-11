@@ -1,8 +1,4 @@
 .gitattributes
 .vs/
-Libraries/include/glad
-Libraries/include/GLFW
-Libraries/include/glm
-Libraries/include/KHR
-Libraries/lib/glfw3.lib
+Libraries/
 x64/
