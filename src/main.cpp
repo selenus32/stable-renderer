@@ -174,8 +174,10 @@ int main()
         
         processInput(window);
 
-        std::string title = "Renderer - " + std::to_string(iFrameRate) + " fps";
-        glfwSetWindowTitle(window, title.c_str());
+        if (iFrame % 16 == 0) {
+            std::string title = "Renderer - " + std::to_string(iFrameRate) + " fps, " + std::to_string(iTimeDelta*1000.) + " ms";
+            glfwSetWindowTitle(window, title.c_str());
+        }
         
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
