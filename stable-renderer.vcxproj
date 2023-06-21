@@ -134,7 +134,6 @@
   <ItemGroup>
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\shaderClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\default_frag.glsl" />
