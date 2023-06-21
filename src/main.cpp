@@ -52,6 +52,19 @@ int main()
 
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
+
+    unsigned int texture;
+
+    glGenTextures(1, &texture);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, iResolution.x, iResolution.y, 0, GL_RGBA,GL_FLOAT, NULL);
+
+    glBindImageTexture(0, texture, 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
     
     while (!glfwWindowShouldClose(window))
     {
@@ -74,22 +87,34 @@ int main()
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
         glfwGetWindowSize(window, &iResolution.x, &iResolution.y);
 
-        Shader shaderProgram("././src/shaders/default_vert.glsl", "././src/shaders/default_frag.glsl");
+        Shader computeProgram("././src/shaders/default.comp.glsl");
+        Shader shaderProgram("././src/shaders/default.vert.glsl", "././src/shaders/default.frag.glsl");
+
+        shaderProgram.setUniform1i("computeTexture", 0);
+
+        computeProgram.setUniform2i("iResolution",iResolution.x,iResolution.y);
+        computeProgram.setUniform1f("iTime", iTime);
+        computeProgram.setUniform1f("iTimeDelta", iTimeDelta);
+        computeProgram.setUniform1f("iFrameRate", iFrameRate);
+        computeProgram.setUniform1i("iFrame", iFrame);
+
+        computeProgram.Activate();
+        glDispatchCompute(iResolution.x, iResolution.y, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+        glActiveTexture(GL_TEXTURE0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, iResolution.x, iResolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
+        glBindImageTexture(0, texture, 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+        glBindTexture(GL_TEXTURE_2D, texture);
+       
         shaderProgram.Activate();
-
-        glUniform2i(glGetUniformLocation(shaderProgram.ID, "iResolution"), iResolution.x,iResolution.y); // Viewport resolution (in pixels)
-        glUniform1f(glGetUniformLocation(shaderProgram.ID, "iTime"), iTime); // Shader playback time (in seconds)
-        glUniform1f(glGetUniformLocation(shaderProgram.ID, "iTimeDelta"), iTimeDelta);
-        glUniform1f(glGetUniformLocation(shaderProgram.ID, "iFrameRate"), iFrameRate);
-        glUniform1i(glGetUniformLocation(shaderProgram.ID, "iFrame"), iFrame);
-
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
-        
+
         glfwSwapBuffers(window);
         glfwPollEvents();
 
-        
+        computeProgram.Delete();
         shaderProgram.Delete();
     }
 

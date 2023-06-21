@@ -1,6 +1,7 @@
 #version 460 core
 
-layout(location = 0) out vec2 texCoord;
+out vec2 texCoord;
+
 void main()
 {
     vec2 position = vec2(gl_VertexID % 2, gl_VertexID / 2) * 4.0 - 1;

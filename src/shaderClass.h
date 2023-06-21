@@ -11,14 +11,20 @@ class Shader {
 	public:
         GLuint ID;
         Shader(const char* vertexFile, const char* fragmentFile);
+        Shader(const char* computeFile);
+
+        void setUniform1i(const char* locVar, GLint v0);
+        void setUniform2i(const char* locVar, GLint v0, GLint v1);
+        void setUniform1f(const char* locVar, GLfloat v0);
+        void setUniform2f(const char* locVar, GLfloat v0, GLfloat v1);
+
 		void Activate();
 		void Delete();
 	private:
         GLuint createShader(const char* shaderFile, GLenum shaderType);
 };
 
-std::string get_file_contents(const char* filename)
-{
+std::string get_file_contents(const char* filename) {
     std::ifstream in(filename);
     //if (!in) {
     //    throw std::runtime_error("Failed to open file: " + std::string(filename));
@@ -55,8 +61,32 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile) {
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+}
 
-    //std::cout << ID << std::endl;
+Shader::Shader(const char* computeFile) {
+    GLuint computeShader = createShader(computeFile, GL_COMPUTE_SHADER);
+
+    ID = glCreateProgram();
+    glAttachShader(ID, computeShader);
+    glLinkProgram(ID);
+
+    glDeleteShader(computeShader);
+}
+
+void Shader::setUniform1i(const char* locVar, GLint v0) {
+    glUniform1i(glGetUniformLocation(ID, locVar), v0);
+}
+
+void Shader::setUniform2i(const char* locVar, GLint v0, GLint v1) {
+    glUniform2i(glGetUniformLocation(ID, locVar), v0, v1);
+}
+
+void Shader::setUniform1f(const char* locVar, GLfloat v0) {
+    glUniform1f(glGetUniformLocation(ID, locVar), v0);
+}
+
+void Shader::setUniform2f(const char* locVar, GLfloat v0, GLfloat v1) {
+    glUniform2f(glGetUniformLocation(ID, locVar), v0, v1);
 }
 
 void Shader::Activate() {
