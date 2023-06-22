@@ -74,19 +74,19 @@ Shader::Shader(const char* computeFile) {
 }
 
 void Shader::setUniform1i(const char* locVar, GLint v0) {
-    glUniform1i(glGetUniformLocation(ID, locVar), v0);
+    glProgramUniform1i(ID,glGetUniformLocation(ID, locVar), v0);
 }
 
 void Shader::setUniform2i(const char* locVar, GLint v0, GLint v1) {
-    glUniform2i(glGetUniformLocation(ID, locVar), v0, v1);
+    glProgramUniform2i(ID,glGetUniformLocation(ID, locVar), v0, v1);
 }
 
 void Shader::setUniform1f(const char* locVar, GLfloat v0) {
-    glUniform1f(glGetUniformLocation(ID, locVar), v0);
+    glProgramUniform1f(ID, glGetUniformLocation(ID, locVar), v0);
 }
 
 void Shader::setUniform2f(const char* locVar, GLfloat v0, GLfloat v1) {
-    glUniform2f(glGetUniformLocation(ID, locVar), v0, v1);
+    glProgramUniform2f(ID, glGetUniformLocation(ID, locVar), v0, v1);
 }
 
 void Shader::Activate() {

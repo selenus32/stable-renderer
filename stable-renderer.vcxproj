@@ -136,8 +136,9 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\default_frag.glsl" />
-    <None Include="src\shaders\default_vert.glsl" />
+    <None Include="src\shaders\default.comp.glsl" />
+    <None Include="src\shaders\default.frag.glsl" />
+    <None Include="src\shaders\default.vert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shaderClass.h" />

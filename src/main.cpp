@@ -91,14 +91,13 @@ int main()
         Shader shaderProgram("././src/shaders/default.vert.glsl", "././src/shaders/default.frag.glsl");
 
         shaderProgram.setUniform1i("computeTexture", 0);
-
-        computeProgram.setUniform2i("iResolution",iResolution.x,iResolution.y);
         computeProgram.setUniform1f("iTime", iTime);
         computeProgram.setUniform1f("iTimeDelta", iTimeDelta);
         computeProgram.setUniform1f("iFrameRate", iFrameRate);
         computeProgram.setUniform1i("iFrame", iFrame);
 
         computeProgram.Activate();
+
         glDispatchCompute(iResolution.x, iResolution.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 

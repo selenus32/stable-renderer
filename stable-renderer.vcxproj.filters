@@ -28,7 +28,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\default_frag.glsl" />
-    <None Include="src\shaders\default_vert.glsl" />
+    <None Include="src\shaders\default.comp.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\shaders\default.frag.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\shaders\default.vert.glsl">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
