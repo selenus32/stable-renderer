@@ -8,7 +8,7 @@
 * GLM
 * GLFW
 
-These libraries can be downloaded separately to this repository and installed appropriately for inclusion in compiling/linking. OpenGL should come with most (if not all) modern GPU drivers.
+These libraries can be downloaded separately to this repository and installed appropriately for inclusion in compiling/linking. OpenGL should come with most modern GPU drivers.
 
 ## Use
 
