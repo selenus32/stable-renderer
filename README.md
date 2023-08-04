@@ -8,7 +8,7 @@
 * GLM
 * GLFW
 
-These libraries can be downloaded separately to this repository and installed appropriately for inclusion in compiling/linking. OpenGL 4.6 should come with most modern GPU drivers and does not require installation.
+These libraries can be downloaded separately to this repository and installed appropriately for inclusion in compiling/linking. OpenGL 4.6 should come with most modern GPU drivers, therefore it should not require installation.
 
 ## Use
 
