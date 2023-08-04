@@ -37,5 +37,8 @@
     <None Include="src\shaders\default.vert.glsl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="src\shaders\mandelbrot.comp.glsl">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\lukea\source\repos\stable-renderer\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\lukea\source\repos\stable-renderer\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\user\Documents\GitHub\stable-renderer\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\user\Documents\GitHub\stable-renderer\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -139,6 +139,7 @@
     <None Include="src\shaders\default.comp.glsl" />
     <None Include="src\shaders\default.frag.glsl" />
     <None Include="src\shaders\default.vert.glsl" />
+    <None Include="src\shaders\mandelbrot.comp.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shaderClass.h" />
